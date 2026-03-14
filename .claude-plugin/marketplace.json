@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "opnet-knowledge",
-      "source": ".",
+      "source": "..",
       "description": "OPNet Bible, domain agents, security patterns, and starter templates",
       "version": "1.0.0"
     }
