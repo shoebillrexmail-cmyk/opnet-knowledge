@@ -30,12 +30,21 @@ OPNet development knowledge base — domain expertise for building on Bitcoin L1
 | `opnet-e2e-tester` | Real on-chain E2E tests with test wallets | Read/Write |
 | `opnet-deployer` | Deploy contracts to testnet/mainnet | Read/Write |
 | `cross-layer-validator` | Check ABI/frontend/backend consistency | Read-only |
+| `spec-writer` | Generate TLA+ formal specs from requirements, verify with TLC | Read/Write |
 
 ### Skills
 | Skill | What it does |
 |-------|-------------|
 | `/opnet-knowledge:pua` | Problem-solving Under Adversity — structured debugging methodology |
 | `/opnet-knowledge:audit-from-bugs` | Generate audit patterns from past bug reports |
+| `/opnet-knowledge:verify-spec` | Generate + verify a TLA+ formal specification for a contract |
+
+### Scripts
+| Script | What it does |
+|--------|-------------|
+| `scripts/setup-tla.sh` | Downloads TLC model checker (one-time setup, requires Java 11+) |
+| `scripts/verify-spec.sh` | Runs TLC against a `.tla` spec, outputs `verification-result.json` |
+| `scripts/parse-tlc-output.py` | Parses TLC output into structured JSON |
 
 ### Starter Templates
 - `templates/starters/op20-token/` — Complete OP-20 token project (contract + frontend)
@@ -82,6 +91,21 @@ Claude: → Launches opnet-auditor agent
         → Runs 27 real-bug pattern scan (PAT-S1 through PAT-T3)
         → Checks arithmetic safety, access control, reentrancy, storage, gas
         → Reports: VERDICT: PASS/FAIL with file:line references
+```
+
+### Formally verify a contract design (TLA+)
+
+```
+You: Verify the staking contract design before I write code
+
+Claude: → Launches spec-writer agent
+        → Translates requirements into TLA+ specification
+        → Defines invariants: BalanceConservation, NoNegativeBalance,
+          AccessControl, RevertConsistency
+        → Runs TLC model checker (explores all possible states)
+        → Reports: "12,847 states checked. All invariants hold."
+        → Or: "VIOLATION: BalanceConservation broken when
+          Transfer(alice, bob, 150) with balance=100. Fixing design..."
 ```
 
 ### Validate cross-layer integration
