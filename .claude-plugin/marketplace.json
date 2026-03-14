@@ -1,0 +1,17 @@
+{
+  "name": "opnet-knowledge",
+  "owner": {
+    "name": "koena"
+  },
+  "metadata": {
+    "description": "OPNet development knowledge base and domain agents for Claude Code"
+  },
+  "plugins": [
+    {
+      "name": "opnet-knowledge",
+      "source": ".",
+      "description": "OPNet Bible, domain agents, security patterns, and starter templates",
+      "version": "1.0.0"
+    }
+  ]
+}

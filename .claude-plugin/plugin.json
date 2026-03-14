@@ -1,0 +1,13 @@
+{
+  "name": "opnet-knowledge",
+  "version": "1.0.0",
+  "description": "OPNet development knowledge base — the Bible (2000+ lines), domain agents (contract, frontend, backend, auditor, deployer), 27 real-bug vulnerability patterns, starter templates, and troubleshooting guides for building on Bitcoin L1 via OPNet",
+  "author": {
+    "name": "koena"
+  },
+  "repository": "https://github.com/shoebillrexmail-cmyk/opnet-knowledge",
+  "license": "MIT",
+  "keywords": ["opnet", "bitcoin", "smart-contracts", "assemblyscript", "web3"],
+  "skills": ["./skills/"],
+  "agents": ["./agents/"]
+}
