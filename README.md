@@ -55,6 +55,11 @@ OPNet development knowledge base — domain expertise for building on Bitcoin L1
 ### Starter Templates
 - `templates/starters/op20-token/` — Complete OP-20 token project (contract + frontend)
 
+### Rules
+| File | What it does |
+|------|-------------|
+| `rules/agent-routing.md` | Auto-detects OPNet projects and routes to the right agent based on context. Maps opnet-bob MCP tools to local agents. Defines when to use each agent proactively. |
+
 ### Learning Data
 - `learning/opnet-foundry.md` — Foundry tooling for OPNet
 - `learning/op-1155-standard.md` — OP-1155 multi-token standard
@@ -62,19 +67,33 @@ OPNet development knowledge base — domain expertise for building on Bitcoin L1
 
 ## Install
 
+### Option A: Plugin (provides skills, agents, hooks)
+
+```bash
+# Add as marketplace and install
+claude plugin marketplace add /path/to/opnet-knowledge --scope user
+claude plugin install opnet-knowledge@opnet-knowledge --scope user
+```
+
+### Option B: Rules only (auto-routing without slash commands)
+
 ```bash
 git clone https://github.com/shoebillrexmail-cmyk/opnet-knowledge.git
+cd opnet-knowledge
+bash install.sh
 ```
 
-**Test locally:**
-```bash
-claude --plugin-dir /path/to/opnet-knowledge
-```
+The installer copies `rules/agent-routing.md` to `~/.claude/rules/common/opnet-agent-routing.md`. This loads automatically in every session and makes Claude:
+- Detect OPNet projects from `@btc-vision` imports, `asconfig.json`, etc.
+- Read the Bible before writing contract code
+- Run the auditor after code changes
+- Use opnet-bob MCP tools when available for live data
 
-**Install as plugin:**
-```
-/plugin marketplace add shoebillrexmail-cmyk/opnet-knowledge
-```
+### Option C: Both (recommended)
+
+Install the plugin AND run the installer for full coverage:
+- Plugin provides: slash commands, agents, hooks
+- Rules provide: automatic context-based agent routing
 
 ## Usage
 
