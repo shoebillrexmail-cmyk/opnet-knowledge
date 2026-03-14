@@ -210,7 +210,7 @@ This plugin pairs with [agile-flow](https://github.com/shoebillrexmail-cmyk/clau
 
 ## Based On
 
-Derived from [buidl-opnet-plugin](https://github.com/anthropics/buidl-opnet-plugin) by dannyplainview + bob. The knowledge base and domain agents are preserved; the closed-loop orchestration pipeline (`/buidl`) is removed in favor of flexible, agent-driven workflows.
+Derived from [buidl-opnet-plugin](https://github.com/bc1plainview/buidl-opnet-plugin) by dannyplainview + bob. The knowledge base and domain agents are preserved; the closed-loop orchestration pipeline (`/buidl`) is removed in favor of flexible, agent-driven workflows.
 
 ## License
 
