@@ -31,6 +31,7 @@ OPNet development knowledge base — domain expertise for building on Bitcoin L1
 | `opnet-deployer` | Deploy contracts to testnet/mainnet | Read/Write |
 | `cross-layer-validator` | Check ABI/frontend/backend consistency | Read-only |
 | `spec-writer` | Generate TLA+ formal specs from requirements, verify with TLC | Read/Write |
+| `spec-auditor` | Reverse-engineer specs from existing code/specs, find design-level bugs | Read/Write |
 
 ### Skills
 | Skill | What it does |
@@ -106,6 +107,33 @@ Claude: → Launches spec-writer agent
         → Reports: "12,847 states checked. All invariants hold."
         → Or: "VIOLATION: BalanceConservation broken when
           Transfer(alice, bob, 150) with balance=100. Fixing design..."
+```
+
+### Find design bugs in existing contracts
+
+```
+You: Check my OptionsPool contract for design-level bugs
+
+Claude: → Launches spec-auditor agent
+        → Reads the contract source code
+        → Reverse-engineers the state machine (storage vars, methods, guards)
+        → Models OPNet partial reverts (BTC transfer + contract revert)
+        → Generates TLA+ spec from what the code ACTUALLY does
+        → Runs TLC against invariants
+        → Reports: "DESIGN-CRITICAL: If alice and bob both execute
+          reservations in the same block, totalReserved exceeds
+          available liquidity. Attack sequence: ..."
+```
+
+### Verify a spec/PRD for logical gaps
+
+```
+You: Check my collateral recycling spec for race conditions
+
+Claude: → Launches spec-auditor in spec mode
+        → Extracts state machine from the document
+        → Models multi-actor interactions
+        → Reports implicit assumptions the spec doesn't enforce
 ```
 
 ### Validate cross-layer integration
