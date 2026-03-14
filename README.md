@@ -32,6 +32,11 @@ OPNet development knowledge base — domain expertise for building on Bitcoin L1
 | `cross-layer-validator` | Check ABI/frontend/backend consistency | Read-only |
 | `spec-writer` | Generate TLA+ formal specs from requirements, verify with TLC | Read/Write |
 | `spec-auditor` | Reverse-engineer specs from existing code/specs, find design-level bugs | Read/Write |
+| `contract-optimizer` | Gas efficiency, storage layout optimization, performance review | Read-only |
+| `frontend-analyzer` | Deep anti-pattern scan (40+ checks) for OPNet frontends | Read-only |
+| `backend-analyzer` | Reliability, indexer gaps, caching, error recovery review | Read-only |
+| `migration-planner` | Plan safe contract upgrades — storage compatibility, ABI diffs, rollback | Read/Write |
+| `dependency-auditor` | Package versions, @rc tags, conflicts, npm audit across all layers | Read-only |
 
 ### Skills
 | Skill | What it does |
