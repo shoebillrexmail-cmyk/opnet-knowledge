@@ -13,6 +13,43 @@ This project is OPNet if ANY of these are true:
 
 If this is NOT an OPNet project, these rules do not apply.
 
+## OPNet MCP Server (`opnet-bob`)
+
+The `opnet-bob` MCP server (`https://ai.opnet.org/mcp`) provides live OPNet tools. If available, agents should prefer MCP tools over local-only analysis for richer results.
+
+### MCP Tool → Agent Mapping
+
+| MCP Tool | Use with agent | How it helps |
+|----------|---------------|-------------|
+| `opnet_audit` | `opnet-auditor`, `frontend-analyzer` | Live security analysis from OPNet's own auditor — use alongside the local 27-pattern scan for a second opinion |
+| `opnet_dev` | `opnet-contract-dev` | Contract scaffolding, boilerplate generation — use when creating new contracts from scratch |
+| `opnet_cli` | `opnet-deployer`, `migration-planner`, `e2e-tester` | On-chain operations — deploy, query state, check deployed contracts |
+| `bitcoin_bips` | `spec-writer`, `spec-auditor` | BIP references for formal verification of Bitcoin-level invariants (CSV, timelocks, PSBT) |
+| `btc_monitor` | `migration-planner`, `opnet-deployer` | Check deployment status, block confirmations, transaction finality |
+| `crypto_charts` | Research spikes (`/agile-flow:spike`) | Market data for pricing models, volatility research |
+| `skill_doc` / `skill_catalog` | All agents | Query OPNet documentation for up-to-date API references |
+| `web_search` | All agents | Search for OPNet issues, community solutions, package changelogs |
+
+### When to Use MCP vs Local Analysis
+
+| Scenario | Use MCP | Use local agent | Use both |
+|----------|---------|----------------|----------|
+| Security audit | `opnet_audit` for live scan | `opnet-auditor` for 27-pattern checklist | **Both** — cross-reference findings |
+| New contract | `opnet_dev` for scaffolding | `opnet-contract-dev` for implementation | MCP scaffolds, agent builds |
+| Deployment | `opnet_cli` for on-chain tx | `opnet-deployer` for process/safety | MCP executes, agent validates |
+| Migration | `btc_monitor` for chain state | `migration-planner` for plan | MCP reads live state, agent plans |
+| Research | `web_search`, `bitcoin_bips` | `spec-writer` / `spec-auditor` | MCP gathers data, agent models |
+
+### Agent Integration Rules
+
+When an agent is invoked in an OPNet project:
+1. **Check if MCP tools are available** — if `opnet-bob` MCP is connected, prefer MCP tools for live data
+2. **Local analysis first, MCP second** — run the local checklist/scan, then use MCP for validation or enrichment
+3. **Cross-reference findings** — if both `opnet_audit` (MCP) and `opnet-auditor` (local agent) flag the same issue, it's high confidence. If only one flags it, investigate further.
+4. **MCP for live state** — agents like `migration-planner` and `e2e-tester` should use MCP tools to read actual on-chain state when available, rather than just analyzing source code
+5. **Fall back gracefully** — if MCP is not connected, all agents work fully from local analysis. MCP enriches but is never required.
+
+
 ## Automatic Agent Triggers
 
 ### When WRITING contract code
