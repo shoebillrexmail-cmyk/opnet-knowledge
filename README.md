@@ -55,6 +55,11 @@ OPNet development knowledge base — domain expertise for building on Bitcoin L1
 ### Starter Templates
 - `templates/starters/op20-token/` — Complete OP-20 token project (contract + frontend)
 
+### Specialist Convention
+| File | What it does |
+|------|-------------|
+| `specialists.md` | Implements the [agile-flow specialist convention](https://github.com/shoebillrexmail-cmyk/claude-agile-flow/blob/master/specialist-convention.md). Declares detection rules, agent tables (story creation / development / review), domain rules, test types, and MCP tool mappings. This is how agile-flow discovers OPNet specialists automatically. |
+
 ### Rules
 | File | What it does |
 |------|-------------|
@@ -193,20 +198,44 @@ Claude: → Copies templates/starters/op20-token/
         → Ready to customize
 ```
 
-## Works With Agile Flow
+## Agile Flow Integration
 
-This plugin pairs with [agile-flow](https://github.com/shoebillrexmail-cmyk/claude-agile-flow) for project management:
+This plugin implements the [agile-flow specialist convention](https://github.com/shoebillrexmail-cmyk/claude-agile-flow/blob/master/specialist-convention.md) via its `specialists.md` file. When both plugins are installed, agile-flow automatically discovers OPNet specialists.
 
-- **agile-flow** manages stories, sprints, boards, and git worktrees
-- **opnet-knowledge** provides the domain expertise for building on OPNet
+### What `specialists.md` provides to agile-flow
+
+| Phase | What agile-flow reads | What it does |
+|-------|----------------------|-------------|
+| `/agile-flow:story` | Detection rules + Story Creation agents | Detects OPNet project, consults `opnet-contract-dev` / `opnet-frontend-dev` / `opnet-backend-dev` for approach feedback, adds domain rules and test types to the story |
+| `/agile-flow:pickup` | Development agents + Domain Rules | Loads OPNet-specific trigger table (contract code → contract-dev, frontend code → frontend-dev, etc.) and domain constraints (SafeMath, no Buffer, signer patterns) into the development brief |
+| `/agile-flow:review` | Review agents + MCP Tools | Launches `opnet-auditor`, `contract-optimizer`, `frontend-analyzer`, `backend-analyzer`, `cross-layer-validator`, `dependency-auditor` in parallel. Uses `opnet_audit` MCP for cross-referencing. |
+
+### Setup for a project
+
+Add a `## Specialists` section to the project's `CLAUDE.md`:
+
+```markdown
+## Specialists
+This is an OPNet project. The `opnet-knowledge` plugin provides domain specialists.
+Domain plugin: opnet-knowledge (see its specialists.md for full config)
+```
+
+agile-flow reads this and loads the specialist config automatically.
+
+### Without agile-flow
+
+The plugin works standalone — just talk to Claude:
 
 ```
 /agile-flow:pickup STORY-staking-contract
 → Claude enters worktree, reads the story
+→ Loads OPNet specialist context from specialists.md
 → Uses opnet-contract-dev agent to build the contract
 → Uses opnet-auditor to verify security
-→ /agile-flow:done → PR + board update
+→ /agile-flow:done → review cycle → learning extraction → PR
 ```
+
+Or without agile-flow at all — the agents and knowledge base are independently usable via natural language or the routing rule.
 
 ## Based On
 
